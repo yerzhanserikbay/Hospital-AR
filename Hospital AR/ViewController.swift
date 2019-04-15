@@ -7,14 +7,81 @@
 //
 
 import UIKit
+import SceneKit
+import ARKit
+import AudioToolbox
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIGestureRecognizerDelegate {
 
+    var sceneView: VirtualObjectARView!
+    
+    weak var blurView: UIVisualEffectView!
+    
+    /// A serial queue for thread safety when modifying the SceneKit node graph.
+    let updateQueue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".serialSceneKitQueue")
+    
+    /// Convenience accessor for the session owned by ARSCNView.
+    var session: ARSession {
+        return sceneView.session
+    }
+    
+    let arLogo = LogoView()
+    
+    lazy var virtualObjectInteraction = VirtualObjectInteraction(sceneView: sceneView)
+    
+    // MARK: - View Controller Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        sceneView = VirtualObjectARView(frame: view.bounds)
+        self.view.addSubview(sceneView)
+    
+        addARLogo()
+        
+        sceneView.delegate = self
+        sceneView.session.delegate = self
+        
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Prevent the screen from being dimmed to avoid interupping the AR experience.
+        UIApplication.shared.isIdleTimerDisabled = true
+        
+        // Start the AR experience
+        resetTracking()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    // MARK: - Session management (Image detection setup)
 
-
+    /// Prevent restarting the session while a restart is in progress.
+    var isRestartAvailable = true
+    
+    /// Create a new AR configuration to run on the 'session'.
+    /// - Tag: ARReferenceImage-Loading
+    func resetTracking() {
+        guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
+            fatalError("Missing expected asset catalog resources.")
+        }
+        
+        let configuration = ARImageTrackingConfiguration()
+        configuration.trackingImages = referenceImages
+        session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+    }
+    
+    func addARLogo() {
+        // Add AR Logo
+        self.view.addSubview(arLogo)
+        
+        arLogo.translatesAutoresizingMaskIntoConstraints = false
+        
+        arLogo.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        arLogo.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+    }
+     
 }
-
