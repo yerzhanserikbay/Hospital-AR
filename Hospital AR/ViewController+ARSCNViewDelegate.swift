@@ -32,18 +32,16 @@ extension ViewController: ARSCNViewDelegate {
             }
             
             node.addChildNode(boneNode)
-            
-            var dict = [Int : SCNNode]()
-            
+        
             var i = 0
             for node in boneNode.childNodes {
-                dict[i] = node
+                self.dictNodes[i] = node
                 i += 1
             }
             
             i = 0
             
-            for node in dict[i]!.childNodes {
+            for node in self.dictNodes[i]!.childNodes {
                 
                 self.addPoint(to: node)
                 self.addButton(to: node)
@@ -61,34 +59,64 @@ extension ViewController: ARSCNViewDelegate {
         }
     }
     
-    func centerPivot(for node: SCNNode) -> SCNNode {
-        var min = SCNVector3Zero
-        var max = SCNVector3Zero
-        node.__getBoundingBoxMin(&min, max: &max)
-        node.pivot = SCNMatrix4MakeTranslation(
-            min.x + (max.x - min.x)/2,
-            min.y + (max.y - min.y)/2,
-            min.z + (max.z - min.z)/2
-        )
-        return node
-    }
-    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        
         guard let touchLocation = touches.first?.location(in: sceneView),
             let hitNode = sceneView?.hitTest(touchLocation, options: nil).first?.node,
             let nodeName = hitNode.name
             else {
-                //No Node Has Been Tapped
+                dictNodes[0]?.childNode(withName: "Hand_R", recursively: true)?.opacity = 1.0
+                dictNodes[0]?.childNode(withName: "Arm_R", recursively: true)?.opacity = 1.0
+                backButton.isHidden = true
+                cutButton.isHidden = true
                 return
                 
         }
+        
         //Handle Event Here e.g. PerformSegue
         if nodeName == "Arm" || nodeName == "Hand" {
             showInfoViewController(object: nodeName)
         }
+        
+        if nodeName == "Arm_R" || nodeName == "Hand_R" {
+            
+            if tappedNodes.count > 3 {
+                tappedNodes.remove(at: 0)
+            }
+            
+            tappedNodes.append(hitNode)
+            
+            var name = String()
+            
+            if nodeName == "Arm_R" {
+                name = "Hand_R"
+            } else {
+                name = "Arm_R"
+            }
+            
+            backButton.isHidden = false
+        
+            cutButton.isHidden = false
+            
+            dictNodes[0]?.childNode(withName: name, recursively: true)?.opacity = 0.5
+
+            dictNodes[0]?.childNode(withName: nodeName, recursively: true)?.opacity = 1.0
+            
+        }
     }
     
     // MARK: - Custom Methods
+    
+    @objc func cutAction() {
+        tappedNodes.last?.isHidden = true
+    }
+    
+    @objc func backAction() {
+        guard !tappedNodes.isEmpty else { return }
+        tappedNodes.last?.isHidden = false
+        tappedNodes.removeLast()
+    }
     
     func addPoint(to node: SCNNode) {
         
@@ -154,5 +182,17 @@ extension ViewController: ARSCNViewDelegate {
         infoViewController.modalTransitionStyle = .crossDissolve
         infoViewController.modalPresentationStyle = .overCurrentContext
         self.present(infoViewController, animated: true, completion: nil)
+    }
+    
+    func centerPivot(for node: SCNNode) -> SCNNode {
+        var min = SCNVector3Zero
+        var max = SCNVector3Zero
+        node.__getBoundingBoxMin(&min, max: &max)
+        node.pivot = SCNMatrix4MakeTranslation(
+            min.x + (max.x - min.x)/2,
+            min.y + (max.y - min.y)/2,
+            min.z + (max.z - min.z)/2
+        )
+        return node
     }
 }
