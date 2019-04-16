@@ -143,3 +143,17 @@ extension SCNNode {
         return self
     }
 }
+
+extension UIButton {
+    class func interfaceButton() -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 21)
+        button.clipsToBounds = true
+        button.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        button.layer.cornerRadius = 30
+        return button
+    }
+}

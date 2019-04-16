@@ -29,6 +29,15 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
     lazy var virtualObjectInteraction = VirtualObjectInteraction(sceneView: sceneView)
     
+    var cutButton = UIButton.interfaceButton()
+    
+    var backButton = UIButton.interfaceButton()
+    
+    var tappedNodes = [SCNNode]()
+    
+    var dictNodes = [Int : SCNNode]()
+    
+    
     // MARK: - View Controller Life Cycle
     
     override func viewDidLoad() {
@@ -41,6 +50,35 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         sceneView.delegate = self
         sceneView.session.delegate = self
         
+        
+        // Init Buttons
+        
+        cutButton.addTarget(self, action: #selector(cutAction), for: .touchUpInside)
+        cutButton.setTitle("Cut", for: .normal)
+        cutButton.translatesAutoresizingMaskIntoConstraints = false
+        cutButton.isHidden = true
+        
+        backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+        backButton.setTitle("Back", for: .normal)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.isHidden = true
+        
+        /// Add Subview Buttons
+        
+        self.view.addSubview(cutButton)
+        self.view.addSubview(backButton)
+        
+        /// Constraint Buttons
+        
+        let margin = self.view.layoutMarginsGuide
+        
+        cutButton.leftAnchor.constraint(equalTo: margin.leftAnchor, constant: 20).isActive = true
+        cutButton.bottomAnchor.constraint(equalTo: margin.bottomAnchor, constant: -50).isActive = true
+        
+        backButton.rightAnchor.constraint(equalTo: margin.rightAnchor, constant: -20).isActive = true
+        backButton.bottomAnchor.constraint(equalTo: margin.bottomAnchor, constant: -50).isActive = true
+        
+       
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,6 +94,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
+    
     
     // MARK: - Session management (Image detection setup)
 
@@ -85,3 +124,4 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     }
      
 }
+
