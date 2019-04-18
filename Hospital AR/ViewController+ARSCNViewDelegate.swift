@@ -180,7 +180,6 @@ extension ViewController: ARSCNViewDelegate {
         let infoViewController = InfoViewController()
         infoViewController.objectName = object
         infoViewController.modalTransitionStyle = .crossDissolve
-        infoViewController.modalPresentationStyle = .overCurrentContext
         self.present(infoViewController, animated: true, completion: nil)
     }
     

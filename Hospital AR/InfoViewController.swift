@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVKit
+import AudioToolbox
 
 class InfoViewController: UIViewController {
 
@@ -17,6 +19,10 @@ class InfoViewController: UIViewController {
     let textView = UITextView()
     
     let closeButton = UIButton()
+    
+    let showVideoButton = UIButton.interfaceButton()
+    
+    let showCaseButton = UIButton.interfaceButton()
     
     
     override func viewDidLoad() {
@@ -34,6 +40,8 @@ class InfoViewController: UIViewController {
         self.view.addSubview(nameLabel)
         self.view.addSubview(textView)
         self.view.addSubview(closeButton)
+        self.view.addSubview(showVideoButton)
+        self.view.addSubview(showCaseButton)
     }
     
     func initViews() {
@@ -46,12 +54,53 @@ class InfoViewController: UIViewController {
         textView.textColor = UIColor.gray
         textView.isEditable = false
 
-        closeButton.frame = CGRect(x: 0, y: 0, width: 104, height: 104)
         closeButton.setImage(UIImage(named: "scanButton"), for: .normal)
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        
+        showVideoButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        showVideoButton.setTitle("Video", for: .normal)
+        showVideoButton.setTitleColor(UIColor.darkGray, for: .normal)
+        showVideoButton.addTarget(self, action: #selector(openVideo), for: .touchUpInside)
+        
+        showCaseButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        showCaseButton.setTitle("Case", for: .normal)
+        showCaseButton.setTitleColor(UIColor.darkGray, for: .normal)
+        showCaseButton.addTarget(self, action: #selector(openCase), for: .touchUpInside)
     }
     
+    // MARK: - Methods for buttons
+    
+    @objc func closeView() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func openVideo() {
+        guard let path = Bundle.main.path(forResource: "Hand-Anatomy", ofType:"mp4") else {
+            debugPrint("Hand-Anatomy.mp4 not found")
+            return
+        }
+        
+        let player = AVPlayer(url: URL(fileURLWithPath: path))
+        let playerController = AVPlayerViewController()
+        playerController.player = player
+        self.present(playerController, animated: true, completion: {
+            player.play()
+        })
+        
+        AudioServicesPlaySystemSound(SystemSoundID(1519))
+    }
+    
+    @objc func openCase() {
+        let caseVC = CaseViewController()
+        print("123")
+        self.present(caseVC, animated: true, completion: nil)
+        AudioServicesPlaySystemSound(SystemSoundID(1519))
+    }
+    
+    // Constraints
     func setConstraints() {
+    
+        /// nameLabel
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -61,7 +110,7 @@ class InfoViewController: UIViewController {
                            toItem: view,
                            attribute: .top,
                            multiplier: 1.0,
-                           constant: 80).isActive = true
+                           constant: 60).isActive = true
         
         NSLayoutConstraint(item: nameLabel,
                            attribute: .centerX,
@@ -78,23 +127,84 @@ class InfoViewController: UIViewController {
                            attribute: .leftMargin,
                            multiplier: 1.0,
                            constant: 20).isActive = true
+        
+        NSLayoutConstraint(item: nameLabel,
+                           attribute: .right,
+                           relatedBy: .equal,
+                           toItem: view,
+                           attribute: .rightMargin,
+                           multiplier: 1.0,
+                           constant: -20).isActive = true
+        
+        NSLayoutConstraint(item: nameLabel,
+                           attribute: .height,
+                           relatedBy: .equal,
+                           toItem: nil,
+                           attribute: .notAnAttribute,
+                           multiplier: 1.0,
+                           constant: 80).isActive = true
+        
 
+        /// textView
         
         textView.translatesAutoresizingMaskIntoConstraints = false
         
         textView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        textView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
         let margins = view.layoutMarginsGuide
         
-        textView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20).isActive = true
+        textView.leftAnchor.constraint(equalTo: margins.leftAnchor, constant: 20).isActive = true
         
-        textView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20).isActive = true
+        textView.rightAnchor.constraint(equalTo: margins.rightAnchor, constant: -20).isActive = true
         
-        textView.topAnchor.constraint(equalTo: nameLabel.layoutMarginsGuide.bottomAnchor, constant: 0).isActive = true
+        textView.topAnchor.constraint(equalTo: nameLabel.layoutMarginsGuide.bottomAnchor, constant: 20).isActive = true
         
-        textView.bottomAnchor.constraint(equalTo: closeButton.layoutMarginsGuide.topAnchor, constant: 0).isActive = true
+        textView.bottomAnchor.constraint(equalTo: showVideoButton.layoutMarginsGuide.topAnchor, constant: -30).isActive = true
         
+        
+        /// showVideoButton
+        
+        showVideoButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint(item: showVideoButton,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: closeButton,
+                           attribute: .top,
+                           multiplier: 1.0,
+                           constant: -100).isActive = true
+        
+        NSLayoutConstraint(item: showVideoButton,
+                           attribute: .leftMargin,
+                           relatedBy: .equal,
+                           toItem: view,
+                           attribute: .leftMargin,
+                           multiplier: 1.0,
+                           constant: 30).isActive = true
+        
+        
+        showCaseButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        /// showCaseButton
+        
+        NSLayoutConstraint(item: showCaseButton,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: closeButton,
+                           attribute: .top,
+                           multiplier: 1.0,
+                           constant: -100).isActive = true
+        
+        NSLayoutConstraint(item: showCaseButton,
+                           attribute: .rightMargin,
+                           relatedBy: .equal,
+                           toItem: view,
+                           attribute: .rightMargin,
+                           multiplier: 1.0,
+                           constant: -30).isActive = true
+        
+        /// closeButton
         
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -104,7 +214,7 @@ class InfoViewController: UIViewController {
                            toItem: view,
                            attribute: .bottomMargin,
                            multiplier: 1.0,
-                           constant: 0).isActive = true
+                           constant: 10).isActive = true
         
         NSLayoutConstraint(item: closeButton,
                            attribute: .centerX,
@@ -114,12 +224,23 @@ class InfoViewController: UIViewController {
                            multiplier: 1.0,
                            constant: 0).isActive = true
         
-    }
-    
-    @objc func closeView() {
-        self.dismiss(animated: true, completion: nil)
-    }
+        NSLayoutConstraint(item: closeButton,
+                           attribute: .height,
+                           relatedBy: .equal,
+                           toItem: nil,
+                           attribute: .notAnAttribute,
+                           multiplier: 1.0,
+                           constant: 124).isActive = true
         
+        NSLayoutConstraint(item: closeButton,
+                           attribute: .width,
+                           relatedBy: .equal,
+                           toItem: nil,
+                           attribute: .notAnAttribute,
+                           multiplier: 1.0,
+                           constant: 124).isActive = true
+        
+    }
     
     /*
     // MARK: - Navigation

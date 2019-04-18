@@ -15,6 +15,10 @@
 		5A2823582263A7D900F534A4 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2823572263A7D900F534A4 /* LogoView.swift */; };
 		5A28235A2263B3D800F534A4 /* ViewController+ARSCNViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2823592263B3D800F534A4 /* ViewController+ARSCNViewDelegate.swift */; };
 		5A28235C226445CB00F534A4 /* VirtualObjectInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A28235B226445CB00F534A4 /* VirtualObjectInteraction.swift */; };
+		5A97CF1E2265EACC0049F4CB /* Hand-Anatomy.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5A97CF1D2265EAB00049F4CB /* Hand-Anatomy.mp4 */; };
+		5A97CF222265EF030049F4CB /* case.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5A97CF212265EF030049F4CB /* case.pdf */; };
+		5A97CF242265EFCC0049F4CB /* CaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97CF232265EFCC0049F4CB /* CaseViewController.swift */; };
+		5A97CF262265F23A0049F4CB /* case1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5A97CF252265F23A0049F4CB /* case1.pdf */; };
 		5AB32A51225DFE0100534968 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB32A50225DFE0100534968 /* AppDelegate.swift */; };
 		5AB32A53225DFE0100534968 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB32A52225DFE0100534968 /* ViewController.swift */; };
 		5AB32A59225DFE0100534968 /* Hospital_AR.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5AB32A57225DFE0100534968 /* Hospital_AR.xcdatamodeld */; };
@@ -53,6 +57,10 @@
 		5A2823572263A7D900F534A4 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		5A2823592263B3D800F534A4 /* ViewController+ARSCNViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+ARSCNViewDelegate.swift"; sourceTree = "<group>"; };
 		5A28235B226445CB00F534A4 /* VirtualObjectInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectInteraction.swift; sourceTree = "<group>"; };
+		5A97CF1D2265EAB00049F4CB /* Hand-Anatomy.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hand-Anatomy.mp4"; sourceTree = "<group>"; };
+		5A97CF212265EF030049F4CB /* case.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = case.pdf; sourceTree = "<group>"; };
+		5A97CF232265EFCC0049F4CB /* CaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseViewController.swift; sourceTree = "<group>"; };
+		5A97CF252265F23A0049F4CB /* case1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = case1.pdf; sourceTree = "<group>"; };
 		5AB32A4D225DFE0100534968 /* Hospital AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hospital AR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AB32A50225DFE0100534968 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AB32A52225DFE0100534968 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +115,9 @@
 		5A00B3C322603229002902C8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5A97CF252265F23A0049F4CB /* case1.pdf */,
+				5A97CF212265EF030049F4CB /* case.pdf */,
+				5A97CF1D2265EAB00049F4CB /* Hand-Anatomy.mp4 */,
 				5AB32A5A225DFE0200534968 /* Assets.xcassets */,
 				5A28235322632F6100F534A4 /* art.scnassets */,
 				5AB32A5C225DFE0200534968 /* LaunchScreen.storyboard */,
@@ -143,8 +154,9 @@
 				5AB32A52225DFE0100534968 /* ViewController.swift */,
 				5A2823592263B3D800F534A4 /* ViewController+ARSCNViewDelegate.swift */,
 				5A28235122632DED00F534A4 /* ViewController+ARSessionDelegate.swift */,
-				5A28235B226445CB00F534A4 /* VirtualObjectInteraction.swift */,
 				5A282355226395E600F534A4 /* InfoViewController.swift */,
+				5A97CF232265EFCC0049F4CB /* CaseViewController.swift */,
+				5A28235B226445CB00F534A4 /* VirtualObjectInteraction.swift */,
 				5A2823572263A7D900F534A4 /* LogoView.swift */,
 				5AFBA6AE225F2D9C00C4ECBD /* ARView */,
 				5A00B3C322603229002902C8 /* Resources */,
@@ -286,9 +298,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A97CF1E2265EACC0049F4CB /* Hand-Anatomy.mp4 in Resources */,
 				5AB32A5E225DFE0200534968 /* LaunchScreen.storyboard in Resources */,
 				5A28235422632F6100F534A4 /* art.scnassets in Resources */,
 				5AB32A5B225DFE0200534968 /* Assets.xcassets in Resources */,
+				5A97CF262265F23A0049F4CB /* case1.pdf in Resources */,
+				5A97CF222265EF030049F4CB /* case.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +338,7 @@
 				5A00B3C522603273002902C8 /* Utilities.swift in Sources */,
 				5A2823582263A7D900F534A4 /* LogoView.swift in Sources */,
 				5AFBA6B2225F308100C4ECBD /* VirtualObject.swift in Sources */,
+				5A97CF242265EFCC0049F4CB /* CaseViewController.swift in Sources */,
 				5AFBA6B0225F2DC600C4ECBD /* VirtualObjectARView.swift in Sources */,
 				5AB32A51225DFE0100534968 /* AppDelegate.swift in Sources */,
 				5AB32A82225DFE7800534968 /* Model.swift in Sources */,
