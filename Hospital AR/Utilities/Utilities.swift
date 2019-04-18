@@ -151,9 +151,10 @@ extension UIButton {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 21)
         button.clipsToBounds = true
-        button.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        button.layer.cornerRadius = 30
+        button.widthAnchor.constraint(equalToConstant: 135).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 52).isActive = true
+        button.layer.cornerRadius = 9
         return button
     }
+    
 }
