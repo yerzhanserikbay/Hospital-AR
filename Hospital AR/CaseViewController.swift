@@ -38,7 +38,7 @@ class CaseViewController: UIViewController, WKNavigationDelegate {
         closeButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
         
         
-        guard let path = Bundle.main.path(forResource: "case1", ofType:"pdf") else {
+        guard let path = Bundle.main.path(forResource: "case", ofType:"pdf") else {
             debugPrint("case.pdf not found")
             return
         }
