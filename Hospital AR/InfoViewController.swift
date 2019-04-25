@@ -32,7 +32,12 @@ class InfoViewController: UIViewController {
         
         initViews()
         addSubviews()
-        setConstraints()
+        
+        setConstraintsNameLabel()
+        setConstraintsTextView()
+        setConstraintsShowVideoButton()
+        setConstraintsShowCaseButton()
+        setConstraintsCloseButton()
     }
     
 
@@ -97,11 +102,8 @@ class InfoViewController: UIViewController {
         AudioServicesPlaySystemSound(SystemSoundID(1519))
     }
     
-    // Constraints
-    func setConstraints() {
     
-        /// nameLabel
-        
+    func setConstraintsNameLabel() {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint(item: nameLabel,
@@ -143,10 +145,9 @@ class InfoViewController: UIViewController {
                            attribute: .notAnAttribute,
                            multiplier: 1.0,
                            constant: 80).isActive = true
-        
-
-        /// textView
-        
+    }
+    
+    func setConstraintsTextView() {
         textView.translatesAutoresizingMaskIntoConstraints = false
         
         textView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -160,10 +161,9 @@ class InfoViewController: UIViewController {
         textView.topAnchor.constraint(equalTo: nameLabel.layoutMarginsGuide.bottomAnchor, constant: 20).isActive = true
         
         textView.bottomAnchor.constraint(equalTo: showVideoButton.layoutMarginsGuide.topAnchor, constant: -30).isActive = true
-        
-        
-        /// showVideoButton
-        
+    }
+    
+    func setConstraintsShowVideoButton() {
         showVideoButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint(item: showVideoButton,
@@ -182,11 +182,10 @@ class InfoViewController: UIViewController {
                            multiplier: 1.0,
                            constant: 30).isActive = true
         
-        
+    }
+    
+    func setConstraintsShowCaseButton() {
         showCaseButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        /// showCaseButton
         
         NSLayoutConstraint(item: showCaseButton,
                            attribute: .bottom,
@@ -203,9 +202,9 @@ class InfoViewController: UIViewController {
                            attribute: .rightMargin,
                            multiplier: 1.0,
                            constant: -30).isActive = true
-        
-        /// closeButton
-        
+    }
+    
+    func setConstraintsCloseButton() {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint(item: closeButton,
@@ -239,7 +238,6 @@ class InfoViewController: UIViewController {
                            attribute: .notAnAttribute,
                            multiplier: 1.0,
                            constant: 124).isActive = true
-        
     }
     
     /*
