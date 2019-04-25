@@ -78,7 +78,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         backButton.rightAnchor.constraint(equalTo: margin.rightAnchor, constant: -20).isActive = true
         backButton.bottomAnchor.constraint(equalTo: margin.bottomAnchor, constant: -50).isActive = true
         
-       
     }
     
     override func viewDidAppear(_ animated: Bool) {
