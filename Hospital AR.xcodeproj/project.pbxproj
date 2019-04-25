@@ -121,6 +121,29 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		5A0AF4E22271F1F4004D9829 /* Cases */ = {
+			isa = PBXGroup;
+			children = (
+				5AB32A68225DFE0200534968 /* Hospital_ARTests.swift */,
+			);
+			path = Cases;
+			sourceTree = "<group>";
+		};
+		5A0AF4E32271F1FF004D9829 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		5A0AF4E42271F207004D9829 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5AB32A6A225DFE0200534968 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		5AB32A44225DFE0100534968 = {
 			isa = PBXGroup;
 			children = (
@@ -164,8 +187,9 @@
 		5AB32A67225DFE0200534968 /* Hospital ARTests */ = {
 			isa = PBXGroup;
 			children = (
-				5AB32A68225DFE0200534968 /* Hospital_ARTests.swift */,
-				5AB32A6A225DFE0200534968 /* Info.plist */,
+				5A0AF4E22271F1F4004D9829 /* Cases */,
+				5A0AF4E32271F1FF004D9829 /* Data */,
+				5A0AF4E42271F207004D9829 /* Supporting Files */,
 			);
 			path = "Hospital ARTests";
 			sourceTree = "<group>";
