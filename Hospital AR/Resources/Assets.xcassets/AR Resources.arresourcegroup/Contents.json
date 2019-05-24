@@ -5,6 +5,9 @@
   },
   "resources" : [
     {
+      "filename" : "anatomyBuilding.arreferenceimage"
+    },
+    {
       "filename" : "bone.arreferenceimage"
     }
   ]

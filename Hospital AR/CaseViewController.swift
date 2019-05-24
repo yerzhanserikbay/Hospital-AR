@@ -15,6 +15,7 @@ class CaseViewController: UIViewController, WKNavigationDelegate {
     
     let closeButton = UIButton.interfaceButton()
     
+    var fileName = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +26,6 @@ class CaseViewController: UIViewController, WKNavigationDelegate {
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         closeButton.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         closeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        
         
         self.view.addSubview(closeButton)
         
@@ -38,8 +38,8 @@ class CaseViewController: UIViewController, WKNavigationDelegate {
         closeButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
         
         
-        guard let path = Bundle.main.path(forResource: "case", ofType:"pdf") else {
-            debugPrint("case.pdf not found")
+        guard let path = Bundle.main.path(forResource: fileName, ofType:"pdf") else {
+            debugPrint("\(fileName).pdf not found")
             return
         }
         

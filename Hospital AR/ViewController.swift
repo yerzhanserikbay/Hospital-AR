@@ -15,8 +15,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
 
     var sceneView: VirtualObjectARView!
     
-    weak var blurView: UIVisualEffectView!
-    
     /// A serial queue for thread safety when modifying the SceneKit node graph.
     let updateQueue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".serialSceneKitQueue")
     
@@ -33,17 +31,34 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var backButton = UIButton.interfaceButton()
     
+    var changerSwitch = UISwitch()
+    
     var tappedNodes = [SCNNode]()
     
-    var dictNodes = [Int : SCNNode]()
+    var nodesDict = [Int : SCNNode]()
     
+    var nodesArray = [SCNNode]()
+    
+    var configType = ConfigType.imageTracking
     
     // MARK: - View Controller Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Init sceneView
         sceneView = VirtualObjectARView(frame: view.bounds)
+//        sceneView.
+//        sceneView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        // Add Subview sceneView
         self.view.addSubview(sceneView)
+        
+        // Set Constraints sceneView
+//        sceneView.centerXAnchor.constraint(equalTo: self.view.layoutMarginsGuide.centerXAnchor).isActive = true
+//        sceneView.centerYAnchor.constraint(equalTo: self.view.layoutMarginsGuide.centerYAnchor).isActive = true
+        
     
         addARLogo()
         
@@ -52,7 +67,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         
         // Init Buttons
-        
         cutButton.addTarget(self, action: #selector(cutAction), for: .touchUpInside)
         cutButton.setTitle("Cut", for: .normal)
         cutButton.translatesAutoresizingMaskIntoConstraints = false
@@ -63,13 +77,19 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.isHidden = true
         
-        /// Add Subview Buttons
+        changerSwitch.addTarget(self, action: #selector(switchIsChanged(sender:)), for: .valueChanged)
+        changerSwitch.isOn = true
+        changerSwitch.translatesAutoresizingMaskIntoConstraints = false
+        changerSwitch.layer.opacity = 0.5
+        changerSwitch.onTintColor = UIColor(red: 64.0/255.0, green: 188.0/255.0, blue: 156.0/255.0, alpha: 1.0/1.0)
+        changerSwitch.tintColor = UIColor(red: 188.0/255.0, green: 126.0/255.0, blue: 64.0/255.0, alpha: 1.0/1.0)
         
+        /// Add Subview Buttons
         self.view.addSubview(cutButton)
         self.view.addSubview(backButton)
+        self.view.addSubview(changerSwitch)
         
-        /// Constraint Buttons
-        
+        /// Set Constraints Buttons
         let margin = self.view.layoutMarginsGuide
         
         cutButton.leftAnchor.constraint(equalTo: margin.leftAnchor, constant: 20).isActive = true
@@ -77,6 +97,9 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         backButton.rightAnchor.constraint(equalTo: margin.rightAnchor, constant: -20).isActive = true
         backButton.bottomAnchor.constraint(equalTo: margin.bottomAnchor, constant: -50).isActive = true
+        
+        changerSwitch.rightAnchor.constraint(equalTo: margin.rightAnchor, constant: -20).isActive = true
+        changerSwitch.bottomAnchor.constraint(equalTo: margin.bottomAnchor, constant: -20).isActive = true
         
     }
     
@@ -94,6 +117,26 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewWillDisappear(animated)
     }
     
+    /// - Tag: Solve sceneView rotation problem
+    override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        var rotation = Float()
+        
+        if toInterfaceOrientation == .portrait {
+            rotation = 0
+        } else
+            if toInterfaceOrientation == .landscapeLeft {
+                rotation = Float.pi/2
+            } else
+                if toInterfaceOrientation == .landscapeRight {
+                    rotation = -Float.pi/2
+        }
+        
+        UIView.animate(withDuration: duration, animations: {
+            self.sceneView.transform = CGAffineTransform(rotationAngle: CGFloat(rotation))
+            self.sceneView.frame = self.view.frame
+            self.sceneView.bounds = self.view.bounds
+        })
+    }
     
     // MARK: - Session management (Image detection setup)
 
@@ -103,13 +146,23 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     /// Create a new AR configuration to run on the 'session'.
     /// - Tag: ARReferenceImage-Loading
     func resetTracking() {
-        guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
-            fatalError("Missing expected asset catalog resources.")
+        if configType == .worldTracking {
+            guard let referenceObjects = ARReferenceObject.referenceObjects(inGroupNamed: "AR Objects", bundle: nil) else {
+                fatalError("Missing expected asset catalog resources.")
+            }
+            
+            let worldTrackingConfiguration = ARWorldTrackingConfiguration()
+            worldTrackingConfiguration.detectionObjects = referenceObjects
+            session.run(worldTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
+        } else {
+            guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
+                fatalError("Missing expected asset catalog resources.")
+            }
+            
+            let imageTrackingConfiguration = ARImageTrackingConfiguration()
+            imageTrackingConfiguration.trackingImages = referenceImages
+            session.run(imageTrackingConfiguration, options: [.resetTracking, .removeExistingAnchors])
         }
-        
-        let configuration = ARImageTrackingConfiguration()
-        configuration.trackingImages = referenceImages
-        session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     }
     
     func addARLogo() {
@@ -120,6 +173,26 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         arLogo.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         arLogo.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+    }
+    
+    @objc func switchIsChanged(sender: UISwitch) {
+        if sender.isOn {
+            configType = ConfigType.imageTracking
+            arLogo.label.text = "识别图片"
+            arLogo.logoImage.image = UIImage(named: "arLogo")
+        } else {
+            configType = ConfigType.worldTracking
+            arLogo.label.text = "识别物体"
+            arLogo.logoImage.image = UIImage(named: "arLogoObject")
+        }
+        resetTracking()
+        
+        if arLogo.isHidden {
+            arLogo.isHidden = false
+        }
+        
+        nodesArray.removeAll()
+        nodesDict.removeAll()
     }
      
 }
