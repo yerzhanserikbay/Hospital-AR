@@ -35,8 +35,49 @@ class InfoViewController: UIViewController {
         
         setConstraintsNameLabel()
         setConstraintsTextView()
-        setConstraintsShowVideoButton()
-        setConstraintsShowCaseButton()
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            setConstraintsShowVideoButton()
+            setConstraintsShowCaseButton()
+        } else if UIDevice.current.userInterfaceIdiom == .pad {
+            showVideoButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint(item: showVideoButton,
+                               attribute: .bottom,
+                               relatedBy: .equal,
+                               toItem: closeButton,
+                               attribute: .top,
+                               multiplier: 1.0,
+                               constant: -100).isActive = true
+            
+            NSLayoutConstraint(item: showVideoButton,
+                               attribute: .rightMargin,
+                               relatedBy: .equal,
+                               toItem: view,
+                               attribute: .centerX,
+                               multiplier: 1.0,
+                               constant: -30).isActive = true
+            
+            showCaseButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint(item: showCaseButton,
+                               attribute: .bottom,
+                               relatedBy: .equal,
+                               toItem: closeButton,
+                               attribute: .top,
+                               multiplier: 1.0,
+                               constant: -100).isActive = true
+            
+            NSLayoutConstraint(item: showCaseButton,
+                               attribute: .leftMargin,
+                               relatedBy: .equal,
+                               toItem: view,
+                               attribute: .centerX,
+                               multiplier: 1.0,
+                               constant: 30).isActive = true
+        }
+        
+        
         setConstraintsCloseButton()
     }
     
@@ -50,11 +91,24 @@ class InfoViewController: UIViewController {
     }
     
     func initViews() {
-        nameLabel.text = objectName
+        if objectName == "anatomyBuilding" {
+            nameLabel.text = "医学之美"
+            textView.text = "送给临近毕业的你，愿同学们前程似锦～"
+            showCaseButton.isHidden = true
+        } else {
+            if objectName == "Heart" {
+                nameLabel.text = "心脏"
+            } else {
+                nameLabel.text = objectName
+            }
+            textView.text = ObjectInfo.getText(for: objectName)
+            showCaseButton.isHidden = false
+        }
+        
         nameLabel.font = UIFont.boldSystemFont(ofSize: 58)
         nameLabel.textColor = UIColor.black
         
-        textView.text = ObjectInfo.getText(for: objectName)
+        
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.textColor = UIColor.gray
         textView.isEditable = false
@@ -63,12 +117,12 @@ class InfoViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         
         showVideoButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        showVideoButton.setTitle("Video", for: .normal)
+        showVideoButton.setTitle("视频", for: .normal)
         showVideoButton.setTitleColor(UIColor.darkGray, for: .normal)
         showVideoButton.addTarget(self, action: #selector(openVideo), for: .touchUpInside)
         
         showCaseButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        showCaseButton.setTitle("Case", for: .normal)
+        showCaseButton.setTitle("病例", for: .normal)
         showCaseButton.setTitleColor(UIColor.darkGray, for: .normal)
         showCaseButton.addTarget(self, action: #selector(openCase), for: .touchUpInside)
     }
@@ -80,10 +134,21 @@ class InfoViewController: UIViewController {
     }
     
     @objc func openVideo() {
-        guard let path = Bundle.main.path(forResource: "Hand-Anatomy", ofType:"mp4") else {
-            debugPrint("Hand-Anatomy.mp4 not found")
+        var name = "Null"
+        
+        if objectName == "anatomyBuilding" {
+            name = objectName
+        } else if objectName == "Heart" {
+            name = "hospitalSimulatorVideo"
+        } else {
+            name = "Hand-Anatomy"
+        }
+        
+        guard let path = Bundle.main.path(forResource: name, ofType:"mp4") else {
+            debugPrint("\(name).mp4 not found")
             return
         }
+        
         
         let player = AVPlayer(url: URL(fileURLWithPath: path))
         let playerController = AVPlayerViewController()
@@ -97,7 +162,13 @@ class InfoViewController: UIViewController {
     
     @objc func openCase() {
         let caseVC = CaseViewController()
-        print("123")
+        
+        if objectName == "Heart" {
+            caseVC.fileName = "heartCase"
+        } else {
+            caseVC.fileName = "case"
+        }
+        
         self.present(caseVC, animated: true, completion: nil)
         AudioServicesPlaySystemSound(SystemSoundID(1519))
     }
@@ -181,7 +252,6 @@ class InfoViewController: UIViewController {
                            attribute: .leftMargin,
                            multiplier: 1.0,
                            constant: 30).isActive = true
-        
     }
     
     func setConstraintsShowCaseButton() {

@@ -15,6 +15,9 @@
 		5A28235A2263B3D800F534A4 /* ViewController+ARSCNViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2823592263B3D800F534A4 /* ViewController+ARSCNViewDelegate.swift */; };
 		5A28235C226445CB00F534A4 /* VirtualObjectInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A28235B226445CB00F534A4 /* VirtualObjectInteraction.swift */; };
 		5A42970C226B6FD0008DB598 /* case.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5A42970B226B6FD0008DB598 /* case.pdf */; };
+		5A5C28042292A2270002E9D7 /* anatomyBuilding.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5A5C280322929C970002E9D7 /* anatomyBuilding.mp4 */; };
+		5A753FC92297FA3600CE25A8 /* heartCase.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5A753FC82297FA3600CE25A8 /* heartCase.pdf */; };
+		5A753FCB2297FA7900CE25A8 /* hospitalSimulatorVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5A753FCA2297FA6E00CE25A8 /* hospitalSimulatorVideo.mp4 */; };
 		5A97CF1E2265EACC0049F4CB /* Hand-Anatomy.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5A97CF1D2265EAB00049F4CB /* Hand-Anatomy.mp4 */; };
 		5A97CF242265EFCC0049F4CB /* CaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A97CF232265EFCC0049F4CB /* CaseViewController.swift */; };
 		5AB32A51225DFE0100534968 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB32A50225DFE0100534968 /* AppDelegate.swift */; };
@@ -55,6 +58,9 @@
 		5A2823592263B3D800F534A4 /* ViewController+ARSCNViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+ARSCNViewDelegate.swift"; sourceTree = "<group>"; };
 		5A28235B226445CB00F534A4 /* VirtualObjectInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectInteraction.swift; sourceTree = "<group>"; };
 		5A42970B226B6FD0008DB598 /* case.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = case.pdf; sourceTree = "<group>"; };
+		5A5C280322929C970002E9D7 /* anatomyBuilding.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = anatomyBuilding.mp4; sourceTree = "<group>"; };
+		5A753FC82297FA3600CE25A8 /* heartCase.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = heartCase.pdf; sourceTree = "<group>"; };
+		5A753FCA2297FA6E00CE25A8 /* hospitalSimulatorVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = hospitalSimulatorVideo.mp4; sourceTree = "<group>"; };
 		5A97CF1D2265EAB00049F4CB /* Hand-Anatomy.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hand-Anatomy.mp4"; sourceTree = "<group>"; };
 		5A97CF232265EFCC0049F4CB /* CaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseViewController.swift; sourceTree = "<group>"; };
 		5AB32A4D225DFE0100534968 /* Hospital AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hospital AR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,7 +117,10 @@
 		5A00B3C322603229002902C8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5A753FC82297FA3600CE25A8 /* heartCase.pdf */,
 				5A42970B226B6FD0008DB598 /* case.pdf */,
+				5A753FCA2297FA6E00CE25A8 /* hospitalSimulatorVideo.mp4 */,
+				5A5C280322929C970002E9D7 /* anatomyBuilding.mp4 */,
 				5A97CF1D2265EAB00049F4CB /* Hand-Anatomy.mp4 */,
 				5AB32A5A225DFE0200534968 /* Assets.xcassets */,
 				5A28235322632F6100F534A4 /* art.scnassets */,
@@ -316,9 +325,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A753FCB2297FA7900CE25A8 /* hospitalSimulatorVideo.mp4 in Resources */,
 				5A97CF1E2265EACC0049F4CB /* Hand-Anatomy.mp4 in Resources */,
 				5AB32A5E225DFE0200534968 /* LaunchScreen.storyboard in Resources */,
 				5A28235422632F6100F534A4 /* art.scnassets in Resources */,
+				5A753FC92297FA3600CE25A8 /* heartCase.pdf in Resources */,
+				5A5C28042292A2270002E9D7 /* anatomyBuilding.mp4 in Resources */,
 				5AB32A5B225DFE0200534968 /* Assets.xcassets in Resources */,
 				5A42970C226B6FD0008DB598 /* case.pdf in Resources */,
 			);

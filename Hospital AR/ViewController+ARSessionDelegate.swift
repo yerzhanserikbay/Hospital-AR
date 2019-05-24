@@ -9,10 +9,15 @@
 import ARKit
 
 extension ViewController: ARSessionDelegate {
+    /// - Tag: ARSCNViewDelegate (Action after object is scanned)
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         if let imageAnchor = anchor as? ARImageAnchor {
             DispatchQueue.main.async {
                 self.arLogo.isHidden = imageAnchor.isTracked
+            }
+        } else if anchor is ARObjectAnchor {
+            DispatchQueue.main.async {
+                self.arLogo.isHidden = true
             }
         }
     }

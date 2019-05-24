@@ -24,7 +24,7 @@ class LogoView: UIVisualEffectView {
         logoImage.image = UIImage(named: "arLogo")
         self.contentView.addSubview(logoImage)
         
-        label.text = "Find an image"
+        label.text = "识别图片"
         label.font = UIFont.systemFont(ofSize: 21)
         label.textColor = .white
         label.sizeToFit()

@@ -84,6 +84,7 @@ extension SCNNode {
             // two points together.
             let sphere = SCNSphere(radius: radius)
             sphere.firstMaterial?.diffuse.contents = color
+            sphere.firstMaterial?.lightingModel = .constant
             self.geometry = sphere
             self.position = startPoint
             return self
@@ -92,6 +93,7 @@ extension SCNNode {
         
         let cyl = SCNCylinder(radius: radius, height: l)
         cyl.firstMaterial?.diffuse.contents = color
+        cyl.firstMaterial?.lightingModel = .constant
         
         self.geometry = cyl
         

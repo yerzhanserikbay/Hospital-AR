@@ -35,7 +35,7 @@ class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
         // Add alightments
         let vel = gesture.velocity(in: sceneView)
         let xPan = gesture.velocity(in: sceneView).x/10000
-
+        print("Gesture is detected")
         
         if gesture.state == .changed {
             // Rotation
