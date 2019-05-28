@@ -24,6 +24,8 @@ class InfoViewController: UIViewController {
     
     let showCaseButton = UIButton.interfaceButton()
     
+    var delegate: ActionAfterCloseViewControllerDelegate?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,6 +133,7 @@ class InfoViewController: UIViewController {
     
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
+        delegate?.closeViewController()
     }
     
     @objc func openVideo() {

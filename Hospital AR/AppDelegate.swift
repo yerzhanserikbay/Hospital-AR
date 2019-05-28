@@ -8,12 +8,15 @@
 
 import UIKit
 import CoreData
+import HumanKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let mainViewController = ViewController()
+    
+    var mind: HumanMind!
     
 
 
@@ -22,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
+        
+        // Biodigital
+        mind = HumanMind(validateKey:"8392d1517c0437054f94913528b83cb40f3954de")
+
         
         return true
     }

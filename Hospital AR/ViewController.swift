@@ -11,7 +11,7 @@ import SceneKit
 import ARKit
 import AudioToolbox
 
-class ViewController: UIViewController, UIGestureRecognizerDelegate {
+class ViewController: UIViewController, UIGestureRecognizerDelegate, ActionAfterCloseViewControllerDelegate {
 
     var sceneView: VirtualObjectARView!
     
@@ -64,7 +64,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         sceneView.delegate = self
         sceneView.session.delegate = self
-        
         
         // Init Buttons
         cutButton.addTarget(self, action: #selector(cutAction), for: .touchUpInside)
@@ -165,6 +164,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    /// - Tag: Function that calls after infoViewController closes
+    func closeViewController() {
+        arLogo.isHidden = false
+        resetTracking()
+    }
+    
+    /// - Tag: Function adds logo to the center of screen
     func addARLogo() {
         // Add AR Logo
         self.view.addSubview(arLogo)
@@ -175,6 +181,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         arLogo.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
     }
     
+    /// - Tag: Function that calls when switch changes
     @objc func switchIsChanged(sender: UISwitch) {
         if sender.isOn {
             configType = ConfigType.imageTracking
@@ -185,6 +192,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
             arLogo.label.text = "识别物体"
             arLogo.logoImage.image = UIImage(named: "arLogoObject")
         }
+        
         resetTracking()
         
         if arLogo.isHidden {
@@ -193,6 +201,28 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         nodesArray.removeAll()
         nodesDict.removeAll()
+    }
+    
+    /// - Tag: Function that clears cache
+    func clearCache() {
+        _ = self.nodesDict.values.map {
+            $0.removeFromParentNode()
+        }
+        self.nodesDict.removeAll()
+        
+        _ = self.nodesArray.map {
+            $0.removeFromParentNode()
+        }
+        
+        self.nodesArray.removeAll()
+        
+        _ = self.tappedNodes.map {
+            $0.removeFromParentNode()
+        }
+        
+        self.tappedNodes.removeAll()
+        
+        print("cleared")
     }
      
 }

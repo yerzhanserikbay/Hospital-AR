@@ -9,6 +9,9 @@
     },
     {
       "filename" : "head.arobject"
+    },
+    {
+      "filename" : "spine-bone.arobject"
     }
   ]
 }

@@ -23,7 +23,13 @@ extension ViewController: ARSCNViewDelegate {
                 handleFoundImage(node)
             }
         } else if anchor is ARObjectAnchor {
-            handleFoundObject(node)
+            if anchor.name == "spine-bone" {
+                DispatchQueue.main.async {
+                    self.presentBiodigitalViewController(object: anchor.name!)
+                }
+            } else {
+                handleFoundObject(node)
+            }
         }
     }
     
@@ -417,7 +423,19 @@ extension ViewController: ARSCNViewDelegate {
         infoViewController.objectName = object
         infoViewController.modalTransitionStyle = .crossDissolve
         infoViewController.modalPresentationStyle = .overCurrentContext
+        infoViewController.delegate = self
         self.present(infoViewController, animated: true, completion: nil)
+    }
+    
+    /// - Tag: Function that presents BiodigitalViewController and send object's name
+    func presentBiodigitalViewController(object: String) {
+        AudioServicesPlaySystemSound(SystemSoundID(1519))
+        let biodigitalViewController = BiodigitalViewController()
+        biodigitalViewController.objectName = object
+        biodigitalViewController.modalTransitionStyle = .crossDissolve
+        biodigitalViewController.modalPresentationStyle = .overCurrentContext
+        biodigitalViewController.delegate = self
+        self.present(biodigitalViewController, animated: true, completion: nil)
     }
     
     /// - Tag: Function that returns a node with center pivot
