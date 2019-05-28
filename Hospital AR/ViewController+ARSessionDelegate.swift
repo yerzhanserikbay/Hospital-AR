@@ -14,6 +14,11 @@ extension ViewController: ARSessionDelegate {
         if let imageAnchor = anchor as? ARImageAnchor {
             DispatchQueue.main.async {
                 self.arLogo.isHidden = imageAnchor.isTracked
+                // After image acnhor disappear, then remove anchor.
+                if imageAnchor.isTracked == false {
+                    self.session.remove(anchor: imageAnchor)
+                    clearCache()
+                }
             }
         } else if anchor is ARObjectAnchor {
             DispatchQueue.main.async {
@@ -22,3 +27,4 @@ extension ViewController: ARSessionDelegate {
         }
     }
 }
+
