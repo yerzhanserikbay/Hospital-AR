@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         // Biodigital
-        mind = HumanMind(validateKey:"8392d1517c0437054f94913528b83cb40f3954de")
+        mind = HumanMind(validateKey:"")
 
         
         return true
