@@ -1,4 +1,4 @@
-# Hospital AR - example app for hospitals
+# Hospital AR
 
 ## Screenshots
 -
