@@ -1,7 +1,7 @@
 # Hospital AR
 
 ## Screenshots
--
+<img src="screenshots/gif1.gif width="200">
 
 ## Versioning
 
